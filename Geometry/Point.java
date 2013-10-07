@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Point
 {
 	public final double x;
@@ -10,13 +12,21 @@ public class Point
 
 	@Override
 	public int hashCode() {
-		return Integer.reverseBytes(this.x) ^ this.y;
+		double hash = 7;
+		hash = 71 * hash + this.x;
+		hash = 71 * hash + this.y;
+		return (int) hash;
 	}
 
 	@Override
 	public boolean equals(Object p) {
 		return (p instanceof Point
-			&& this.x == p.x
-			&& this.y == p.y);
+			&& this.x == ((Point) p).x
+			&& this.y == ((Point) p).y);
+	}
+
+	public double distance(Point p) {
+		return Math.sqrt((p.x - this.x) * (p.x - this.x)
+			+ (p.y - this.y) * (p.y - this.y));
 	}
 }
