@@ -1,19 +1,48 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Primes
 {
     /**
-     * Determine whether or not a number is prime.
+     * Determine whether or not a number is prime. Uses Miller-Rabin.
      */
-    public static boolean isPrime(long x) {
-        if (x == 1)
-            return false;
-        if (x == 2 || x == 3)
-            return true;
+    public static boolean isPrime(int n) {
+        /* Use some reasonably high accuracy requirement. */
+        return Primes.isPrime(n, 100);
+    }
 
-        for (long i = 2; i < x / 2 + 1; i++)
-            if (x % i == 0)
-                return false;
+    /**
+     * Determine whether or not a number is prime. Uses Miller-Rabin.
+     */
+    public static boolean isPrime(int n, int k) {
+        if (n == 0 || n == 1) return false;
+        if (n == 2 || n == 3) return true;
+        if ((n & 1) == 0) return false;
+
+        int d = (n - 1) >> 1;
+        int s = 1;
+        while ((s & 1) == 0) {
+            d >>= 1;
+            s++;
+        }
+
+        Random r = new Random();
+        for (int i = 0; i < k; i++) {
+            int a = r.nextInt(n - 3) + 2;
+            int x = Integers.modPow(a, d, n);
+
+            if (x == 1 || x == n - 1) continue;
+
+            for (int j = 0; j < s - 1; j++) {
+                x = (x * x) % n;
+                if (x == 1) return false;
+                if (x == n - 1) break;
+            }
+
+            if (x == n - 1) continue;
+            else return false;
+        }
+
         return true;
     }
 

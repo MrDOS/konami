@@ -12,6 +12,7 @@ public class PrimesTest
         assertEquals(true, Primes.isPrime(3));
         assertEquals(true, Primes.isPrime(5));
         assertEquals(true, Primes.isPrime(7));
+        assertEquals(true, Primes.isPrime(11));
 
         assertEquals(false, Primes.isPrime(1));
         assertEquals(false, Primes.isPrime(4));
