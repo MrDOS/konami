@@ -5,26 +5,21 @@ import java.util.*;
  * T = vertex type, P = precision type
  * i.e. String, Double
  */
-public class ListGraph<T, P extends Number & Comparable<? super P>>
-{
-    class Vertex
-    {
+public class ListGraph<T, P extends Number & Comparable<? super P>> {
+    class Vertex {
         private T label;
         private List<Edge> edges = new ArrayList<Edge>();
 
-        public Vertex(T aLabel)
-        {
+        public Vertex(T aLabel) {
             label = aLabel;
         }
     }
 
-    class Edge
-    {
+    class Edge {
         private Vertex target;
         private P weight;
 
-        public Edge(Vertex aTarget, P aWeight)
-        {
+        public Edge(Vertex aTarget, P aWeight) {
             target = aTarget;
             weight = aWeight;
         }
@@ -36,8 +31,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
      * Adds a vertex to the graph.
      * @return true if added, false if not
      */
-    public boolean addVertex(T vertex)
-    {
+    public boolean addVertex(T vertex) {
         if (vertices.get(vertex) != null)
             return false;
         vertices.put(vertex, new Vertex(vertex));
@@ -49,8 +43,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
      * @return true if edge added,
      * false if edge already exists (or start or end null
      */
-    public boolean addEdge(T start, T end, P weight)
-    {
+    public boolean addEdge(T start, T end, P weight) {
         Vertex sV = vertices.get(start);
         Vertex eV = vertices.get(end);
         if (sV == null || eV == null || getEdgeCost(start, end) != null)
@@ -63,8 +56,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
      * @return the cost of the edge between start and end
      * or null if an edge doesn't exist (or start or end null)
      */
-    public P getEdgeCost(T start, T end)
-    {
+    public P getEdgeCost(T start, T end) {
         Vertex sV = vertices.get(start);
         Vertex eV = vertices.get(end);
         if (sV == null || eV == null)
@@ -83,8 +75,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
      * @return a queue of vertices in the traversal, including the origin
      * at the front of the queue
      */
-    public Deque<T> BFS(T origin)
-    {
+    public Deque<T> BFS(T origin) {
         Deque<T> order = new LinkedList<T>();
         Deque<Vertex> queue = new LinkedList<Vertex>();
         Set<Vertex> visited = new HashSet<Vertex>();
@@ -96,15 +87,12 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
         queue.addFirst(oV);
         visited.add(oV);
 
-        while (queue.size() > 0)
-        {
+        while (queue.size() > 0) {
             Vertex cur = queue.pollFirst();
             List<Edge> cE = cur.edges;
-            for (Edge e : cE)
-            {
+            for (Edge e : cE) {
                 Vertex n = e.target;
-                if (!visited.contains(n))
-                {
+                if (!visited.contains(n)) {
                     visited.add(n);
                     order.add(n.label);
                     queue.add(n);
@@ -120,8 +108,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
      * @return a queue of vertices in the traversal, including the origin
      * at the front of the queue
      */
-    public Deque<T> DFS(T origin)
-    {
+    public Deque<T> DFS(T origin) {
         Deque<T> order = new LinkedList<T>();
         Map<Vertex, Integer> vStatus = new HashMap<Vertex, Integer>();
         Map<Edge, Integer> eStatus = new HashMap<Edge, Integer>();
@@ -132,8 +119,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
     }
 
     private void dfsHelper(Vertex v, Deque<T> order,
-        Map<Vertex, Integer> vStatus, Map<Edge, Integer> eStatus)
-    {
+        Map<Vertex, Integer> vStatus, Map<Edge, Integer> eStatus) {
         final int DISC = 1;
         final int BACK = 2;
         final int EXPL = 3;
@@ -142,14 +128,11 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
             order.addLast(v.label);
         vStatus.put(v, DISC);
 
-        for (Edge e : v.edges)
-        {
-            if (eStatus.get(e) == null) // unexplored
-            {
+        for (Edge e : v.edges) {
+            if (eStatus.get(e) == null) // unexplored {
                 Vertex w = e.target;
                 Integer wS = vStatus.get(w);
-                if (wS == null || wS != EXPL) // unexplored
-                {
+                if (wS == null || wS != EXPL) // unexplored {
                     eStatus.put(e, DISC);
                     dfsHelper(w, order, vStatus, eStatus);
                 }
@@ -168,8 +151,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
      * http://www.keithschwarz.com/interesting/code/
      *                             topological-sort/TopologicalSort.java.html
      */
-    public List<T> topologicalOrder()
-    {
+    public List<T> topologicalOrder() {
         ListGraph<T, P> reverse = new ListGraph<T, P>();
         for (T t : vertices.keySet())
             reverse.addVertex(t);
@@ -181,14 +163,11 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
         Set<Vertex> visited = new HashSet<Vertex>();
         Set<Vertex> expanded = new HashSet<Vertex>();
 
-        for (Vertex v : reverse.vertices.values())
-        {
-            try
-            {
+        for (Vertex v : reverse.vertices.values()) {
+            try {
                 topologicalOrderHelper(v, reverse, result, visited, expanded);
             }
-            catch (IllegalArgumentException e)
-            {
+            catch (IllegalArgumentException e) {
                 return null;
             }
         }
@@ -198,10 +177,8 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
 
     private void topologicalOrderHelper(Vertex v,
         ListGraph<T, P> graph, List<T> result,
-        Set<Vertex> visited, Set<Vertex> expanded)
-    {
-        if (visited.contains(v))
-        {
+        Set<Vertex> visited, Set<Vertex> expanded) {
+        if (visited.contains(v)) {
             if (expanded.contains(v))
                 return;
             throw new IllegalArgumentException("Cycle");
@@ -219,25 +196,21 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
      * @param paths if required, this should be a map which will be filled in
      * with each endpoint -> the list of vertices taken to reach it from the
      * origin or null if no path exists -- pass null if this is not required
-     * @param dijkHelper should be a little helper class which provides
+     * @param helper should be a little helper class which provides
      * zero and the maximum value of the generic P and adds two Ps together.
      * @return a map of each end point vertex with the minimum total cost of
      * the path to reach it
      */
     public Map<T, P> dijkstra(T origin, Map<T, List<T>> paths,
-        final dijkHelper<P> helper)
-    {
-        class dijkNode implements Comparable<dijkNode>
-        {
+        final DijkHelper<P> helper) {
+        class dijkNode implements Comparable<dijkNode> {
             Vertex v;
             P minCost = helper.max();
             Vertex prev;
-            public dijkNode(Vertex aV)
-            {
+            public dijkNode(Vertex aV) {
                 v = aV;
             }
-            public int compareTo(dijkNode o)
-            {
+            public int compareTo(dijkNode o) {
                 return minCost.compareTo(o.minCost);
             }
         }
@@ -256,15 +229,12 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
         start.minCost = helper.zero();
         queue.add(start);
 
-        while (queue.size() > 0)
-        {
+        while (queue.size() > 0) {
             dijkNode u = queue.poll();
-            for (Edge e : u.v.edges)
-            {
+            for (Edge e : u.v.edges) {
                 dijkNode t = nMap.get(e.target);
                 P weightViaU = helper.add(u.minCost, e.weight);
-                if (weightViaU.compareTo(t.minCost) < 0)
-                {
+                if (weightViaU.compareTo(t.minCost) < 0) {
                     queue.remove(t);
                     t.minCost = weightViaU;
                     t.prev = u.v;
@@ -273,11 +243,9 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
             }
         }
 
-        for (Vertex target : vertices.values())
-        {
+        for (Vertex target : vertices.values()) {
             ret.put(target.label, nMap.get(target).minCost);
-            if (paths != null)
-            {
+            if (paths != null) {
                 LinkedList<T> p = new LinkedList<T>();
                 for (Vertex v = target; v != null; v = nMap.get(v).prev)
                     p.addFirst(v.label);
@@ -290,8 +258,7 @@ public class ListGraph<T, P extends Number & Comparable<? super P>>
 }
 
 /* Dijkstra Helper Interface */
-interface dijkHelper<P>
-{
+interface DijkHelper<P> {
     public P zero();
     public P max();
     public P add(P a, P b);

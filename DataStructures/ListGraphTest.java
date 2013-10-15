@@ -5,8 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 
-public class ListGraphTest
-{
+public class ListGraphTest {
     @Test
     public void addVertexTest() throws Exception {
         ListGraph<String, Integer> l = new ListGraph<String, Integer>();
@@ -91,8 +90,7 @@ public class ListGraphTest
 
 
     // shamelessly borrowed from my data structures text book
-    private static int smallGraph(ListGraph<String, Integer> graph)
-    {
+    private static int smallGraph(ListGraph<String, Integer> graph) {
         String[] vertices = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
         for (String v : vertices)
             graph.addVertex(v);
@@ -155,18 +153,14 @@ public class ListGraphTest
     @Test
     public void dijkstraTest() throws Exception {
         ListGraph<Integer, Integer> l = new ListGraph<Integer, Integer>();
-        class Helper implements dijkHelper<Integer>
-        {
-            public Integer zero()
-            {
+        class Helper implements DijkHelper<Integer> {
+            public Integer zero() {
                 return 0;
             }
-            public Integer max()
-            {
+            public Integer max() {
                 return Integer.MAX_VALUE;
             }
-            public Integer add(Integer a, Integer b)
-            {
+            public Integer add(Integer a, Integer b) {
                 return a + b;
             }
         }
@@ -187,8 +181,7 @@ public class ListGraphTest
     }
 
     // shamelessly borrowed from my data structures text book
-    private static int smallDAG(ListGraph<String, Integer> graph)
-    {
+    private static int smallDAG(ListGraph<String, Integer> graph) {
         String[] vertices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         for (String v : vertices)
             graph.addVertex(v);
@@ -206,8 +199,7 @@ public class ListGraphTest
     }
 
     // shamelessly borrowed from wikipedia
-    private static int wikiDAG(ListGraph<String, Integer> graph)
-    {
+    private static int wikiDAG(ListGraph<String, Integer> graph) {
         String[] vertices = {"2", "3", "5", "7", "8", "9", "10", "11"};
         for (String v : vertices)
             graph.addVertex(v);
@@ -223,8 +215,7 @@ public class ListGraphTest
     }
 
     // shamelessly borrowed from my AI course
-    private static void romaniaGraph(ListGraph<Integer, Integer> graph)
-    {
+    private static void romaniaGraph(ListGraph<Integer, Integer> graph) {
         for (int i = 0; i < 19; i++)
             graph.addVertex(i);
         graph.addEdge(0, 15, 140);
