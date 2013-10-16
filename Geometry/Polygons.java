@@ -3,7 +3,7 @@ import java.awt.geom.Point2D;
 public class Polygons
 {
     /**
-     * Determine the area of a polygon.
+     * Determine the area of a polygon. Points must be sorted counter-clockwise.
      */
     public static double area(Point2D[] points) {
         double area = 0.0;
