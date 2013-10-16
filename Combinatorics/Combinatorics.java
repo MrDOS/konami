@@ -36,7 +36,7 @@ public class Combinatorics
      */
     public static long factorial(long x) {
         if (x < 0) return 0;
-        if (x < factorials.size()) return factorials.get(x);
+        if (factorials.containsKey(x)) return factorials.get(x);
 
         long xf;
         if (x == 0) xf = 1;
