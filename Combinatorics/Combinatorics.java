@@ -2,23 +2,38 @@ import java.util.HashMap;
 
 public class Combinatorics
 {
-    public long RepYesOrderNo(long N, long R) {
-        return factorial(N + R - 1) / (factorial(R) * (factorial(N - 1)));
+    /**
+     * C(n, k): no replacement, no ordering.
+     */
+    public long choose(long n, long k) {
+        return factorial(n) / (factorial(k) * (factorial(n - k)));
     }
 
-    public long RepNoOrderNo(long N, long R) {
-        return factorial(N) / (factorial(R) * (factorial(N - R)));
+    /**
+     * P(n, k): no replacement, with ordering.
+     */
+    public long permutations(long n, long k) {
+        return factorial(n) / (factorial(n - k));
     }
 
-    public long RepNoOrderYes(long N, long R) {
-        return factorial(N) / (factorial(N - R));
+    /**
+     * Pa(n, r): with replacement, no ordering.
+     */
+    public long partitions(long n, long r) {
+        return factorial(n + r - 1) / (factorial(n) * factorial(r - 1));
     }
 
-    public long RepYesOrderYes(long N, long R) {
-        return (long) Math.pow(N, R);
+    /**
+     * S(n, k): with replacement, with ordering.
+     */
+    public long samples(long n, long k) {
+        return (long) Math.pow(n, k);
     }
 
     private static HashMap<Long, Long> factorials = new HashMap<Long, Long>();
+    /**
+     * n!
+     */
     public static long factorial(long x) {
         if (x < 0) return 0;
         if (x < factorials.size()) return factorials.get(x);
