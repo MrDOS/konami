@@ -9,10 +9,9 @@ public class Points
     /**
      * Determine whether a point is left of, right of, or on a directional line.
      */
-    public static Side side(Line2D line, Point2D point)
-    {
-        double side = (line.getP2().getX() - line.getP1().getX()) * (point.getY() - line.getP1().getY())
-                    - (line.getP2().getY() - line.getP1().getY()) * (point.getX() - line.getP1().getX());
+    public static Side side(Line2D.Double line, Point2D.Double point) {
+        double side = (line.x2 - line.x1) * (point.y - line.y1)
+                    - (line.y2 - line.y1) * (point.x - line.x1);
         return (side < 0) ? Side.RIGHT : (side > 0) ? Side.LEFT : Side.ON;
     }
 }
